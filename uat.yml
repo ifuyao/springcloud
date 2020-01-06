@@ -1,0 +1,63 @@
+spring:
+  datasource:
+    initialize: false
+    master:
+      url: jdbc:sqlserver://192.168.17.227:1433;DatabaseName=CRM_MSCRM
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: sa
+      password: '@DrmSWL2018'
+    extension:
+      url: jdbc:sqlserver://192.168.17.227:1433;DatabaseName=CRM_Extension
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      username: sa
+      password: '@DrmSWL2018'
+    druid:
+      initial-size: 10
+      max-active: 30000
+      min-idle: 5
+      test-on-borrow: false
+      test-while-idle: true
+      db-type: sqlserver
+    type: com.alibaba.druid.pool.DruidDataSource
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+mapper:
+  identity: SQLSERVER
+pagehelper:
+  helper-dialect: sqlserver
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+drmswl:
+  crm:
+    url: http://192.168.17.222:60808/
+    basedataurl: http://192.168.17.222:60808/
+    data:
+      ownerid: 7B2C0239-B4E1-E911-B01B-005056B01863
+      owningbusinessunit: 89250239-B4E1-E911-B01B-005056B01863
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: true
+  eager-load:
+    enabled: true
+    clients: user-pos-service,trade-pos-service,promotion-pos-service,message-service,base-service,promotion-service,trade-service,analysis-service
+feign:
+  hystrix:
+    enabled: false
+  httpclient:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
